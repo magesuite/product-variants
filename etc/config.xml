@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <product_variants>
+            <configuration>
+                <enabled>1</enabled>
+                <attribute_code>article_group_id</attribute_code>
+                <short_name_pattern>remove_prefix</short_name_pattern>
+            </configuration>
+        </product_variants>
+    </default>
+</config>

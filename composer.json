@@ -1,0 +1,17 @@
+{
+  "name": "creativestyle/magesuite-product-variants",
+  "homepage": "https://creativestyle.de",
+  "license": "OSL-3.0",
+  "require": {
+    "php": "~5.6.0|~7.0.0|~7.1.0",
+    "magento/framework": "^101.0.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Creativestyle\\MageSuite\\ProductVariants": ""
+    }
+  }
+}

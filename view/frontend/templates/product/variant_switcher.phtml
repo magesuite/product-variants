@@ -1,0 +1,25 @@
+<?php
+/** @var \Creativestyle\MageSuite\ProductVariants\Block\Product\VariantSwitcher $block */
+$variants = $block->getVariants();
+?>
+
+<?php if($variants != null and is_array($variants) and !empty($variants)): ?>
+    <div class="cs-input cs-form__field cs-product-sale-block__variants">
+        <label class="cs-label cs-product-sale-block__variants-label" for="variant-switcher-select"><?php /* @escapeNotVerified */ echo __('Variants'); ?></label>
+        <div class="cs-input__control cs-product-sale-block__variants-dropdown">
+            <select id="variant-switcher-select" name="variant-switcher-select" class="cs-select">
+                <?php foreach($variants as $variant): ?>
+                    <option value="<?=$variant['url']?>" data-content="<div class='cs-html-select__text-image-wrapper'><img class='cs-html-select__thumbnail' src='<?=$variant['image_url']?>' /> <?=$variant['short_name']?></div>"><?=$variant['short_name']?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <script>
+        require(['jquery'], function ($) {
+            'use strict';
+            $('#variant-switcher-select').on('change', function(event) {
+                window.location.href = $(this).val();
+            });
+        });
+    </script>
+<?php endif; ?>
