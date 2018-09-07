@@ -11,7 +11,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Creativestyle\\MageSuite\\ProductVariants": ""
+      "Creativestyle\\MageSuite\\ProductVariants\\": ""
     }
   }
 }
