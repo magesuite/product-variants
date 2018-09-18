@@ -1,7 +1,9 @@
 {
   "name": "creativestyle/magesuite-product-variants",
+  "description": "MageSuite Product Variants",
   "homepage": "https://creativestyle.de",
   "license": "OSL-3.0",
+  "type": "magento2-module",
   "require": {
     "php": "~5.6.0|~7.0.0|~7.1.0",
     "magento/framework": "^101.0.0"
