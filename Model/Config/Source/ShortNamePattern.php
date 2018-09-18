@@ -1,6 +1,6 @@
 <?php
 
-namespace Creativestyle\MageSuite\ProductVariants\Model\Config\Source;
+namespace MageSuite\ProductVariants\Model\Config\Source;
 
 
 class ShortNamePattern implements \Magento\Framework\Option\ArrayInterface

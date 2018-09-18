@@ -6,7 +6,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Creativestyle_ProductVariantsExtension::config_productvariants" title="Creativestyle Product Variants"/>
+                            <resource id="MageSuite_ProductVariants::config_productvariants" title="MageSuite Product Variants"/>
                         </resource>
                     </resource>
                 </resource>

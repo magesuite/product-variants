@@ -1,6 +1,6 @@
 <?php
 
-namespace Creativestyle\MageSuite\ProductVariants\Test\Integration\Block\Product;
+namespace MageSuite\ProductVariants\Test\Integration\Block\Product;
 
 class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,7 +15,7 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     protected $coreRegistry;
 
     /**
-     * @var \Creativestyle\MageSuite\ProductVariants\Block\Product\VariantSwitcher
+     * @var \MageSuite\ProductVariants\Block\Product\VariantSwitcher
      */
     protected $variantSwitcherBlock;
 
@@ -28,7 +28,7 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->coreRegistry = $this->objectManager->get(\Magento\Framework\Registry::class);
-        $this->variantSwitcherBlock = $this->objectManager->get(\Creativestyle\MageSuite\ProductVariants\Block\Product\VariantSwitcher::class);
+        $this->variantSwitcherBlock = $this->objectManager->get(\MageSuite\ProductVariants\Block\Product\VariantSwitcher::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
     }
 

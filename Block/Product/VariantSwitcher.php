@@ -1,10 +1,10 @@
 <?php
 
-namespace Creativestyle\MageSuite\ProductVariants\Block\Product;
+namespace MageSuite\ProductVariants\Block\Product;
 
 class VariantSwitcher extends \Magento\Framework\View\Element\Template
 {
-    protected $_template = 'Creativestyle_ProductVariantsExtension::product/variant_switcher.phtml';
+    protected $_template = 'MageSuite_ProductVariants::product/variant_switcher.phtml';
 
     const PRODUCT_VARIANTS_ENABLED_CONFIG_PATH = 'product_variants/configuration/enabled';
     const PRODUCT_GROUP_ID_CONFIG_PATH = 'product_variants/configuration/attribute_code';
@@ -32,7 +32,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
     protected $imageHelper;
 
     /**
-     * @var \Creativestyle\MageSuite\ProductVariants\Services\Utils\StringUtils
+     * @var \MageSuite\ProductVariants\Services\Utils\StringUtils
      */
     private $stringUtils;
 
@@ -42,7 +42,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
         \Magento\Catalog\Helper\Image $imageHelper,
-        \Creativestyle\MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
+        \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
         array $data = []
     )
     {

@@ -1,6 +1,6 @@
 <?php
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Creativestyle_ProductVariantsExtension',
+    'MageSuite_ProductVariants',
     __DIR__
 );

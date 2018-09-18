@@ -1,6 +1,6 @@
 <?php
 
-namespace Creativestyle\MageSuite\ProductVariants\Services\Utils;
+namespace MageSuite\ProductVariants\Services\Utils;
 
 
 class StringUtils

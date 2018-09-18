@@ -1,13 +1,8 @@
 <?php
 
-namespace Creativestyle\MageSuite\ProductVariants\Setup;
+namespace MageSuite\ProductVariants\Setup;
 
-
-use Magento\Framework\Setup\InstallDataInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
-
-class InstallData implements InstallDataInterface
+class InstallData implements \Magento\Framework\Setup\InstallDataInterface
 {
 
     /**
@@ -34,15 +29,10 @@ class InstallData implements InstallDataInterface
         $this->eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetupInterface]);
     }
 
-
-    /**
-     * Installs data for a module
-     *
-     * @param ModuleDataSetupInterface $setup
-     * @param ModuleContextInterface $context
-     * @return void
-     */
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function install(
+        \Magento\Framework\Setup\ModuleDataSetupInterface $setup,
+        \Magento\Framework\Setup\ModuleContextInterface $context
+    )
     {
         if (!$this->eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, 'article_group_id')) {
             $this->eavSetup->addAttribute(
@@ -55,6 +45,7 @@ class InstallData implements InstallDataInterface
                     'filterable' => 0,
                     'searchable' => 0,
                     'visible_on_front' => 0,
+                    'used_in_product_listing' => 1,
                     'label' => 'Article Group ID',
                     'Group' => 'General'
                 ]

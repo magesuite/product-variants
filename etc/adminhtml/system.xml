@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="creativestyle" translate="label" sortOrder="300">
-            <label>creativeshop</label>
+        <tab id="magesuite" translate="label" sortOrder="300">
+            <label>MageSuite</label>
         </tab>
         <section id="product_variants" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Product Variants</label>
-            <tab>creativestyle</tab>
-            <resource>Creativestyle_ProductVariantsExtension::config_productvariants</resource>
+            <tab>magesuite</tab>
+            <resource>MageSuite_ProductVariants::config_productvariants</resource>
             <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Configuration</label>
                 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -20,7 +20,7 @@
                 </field>
                 <field id="short_name_pattern" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Short Name Pattern</label>
-                    <source_model>Creativestyle\MageSuite\ProductVariants\Model\Config\Source\ShortNamePattern</source_model>
+                    <source_model>MageSuite\ProductVariants\Model\Config\Source\ShortNamePattern</source_model>
                 </field>
             </group>
         </section>
