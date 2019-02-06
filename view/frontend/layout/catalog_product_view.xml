@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="product.info.form.content">
-            <block class="MageSuite\ProductVariants\Block\Product\VariantSwitcher" name="product.info.variant_switcher" before="product.info.addtocart"/>
+        <referenceContainer name="product.info.main">
+            <block class="MageSuite\ProductVariants\Block\Product\VariantSwitcher" name="product.info.variant_switcher">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Product variants</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
