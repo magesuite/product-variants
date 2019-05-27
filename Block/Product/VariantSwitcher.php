@@ -87,7 +87,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
             $variants[] = $variant;
         }
 
-        if (count($variants) == 1) {
+        if (count($variants) < 2) {
             return [];
         }
 
