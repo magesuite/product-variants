@@ -51,19 +51,21 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
                 'name' => 'Product variant 12 suffix',
                 'url' => 'http://localhost/index.php/product-variant-2.html',
                 'short_name' => '12 suffix',
+                'variant_name' => ''
             ),
             1 => array(
                 'name' => 'Product variant 11 suffix',
                 'url' => 'http://localhost/index.php/product-variant-1.html',
                 'short_name' => '11 suffix',
+                'variant_name' => 'Custom short name'
             )
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
-            $this->assertEquals($expectedVariant['name'], $variants[$index]['name']);
-            $this->assertEquals($expectedVariant['url'], $variants[$index]['url']);
-            $this->assertEquals($expectedVariant['short_name'], $variants[$index]['short_name']);
-            $this->assertStringEndsWith('.jpg', $variants[$index]['image_url']);
+            $this->assertEquals($expectedVariant['name'], $variants[$index]->getName());
+            $this->assertEquals($expectedVariant['url'], $variants[$index]->getUrl());
+            $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
+            $this->assertStringEndsWith('.jpg', $variants[$index]->getImageUrl());
         }
     }
 
@@ -83,15 +85,15 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         $expectedVariants = array(
             0 => array(
-                'short_name' => 'Product variant 12',
+                'short_name' => 'Product variant 12'
             ),
             1 => array(
-                'short_name' => 'Product variant 11',
+                'short_name' => 'Product variant 11'
             )
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
-            $this->assertEquals($expectedVariant['short_name'], $variants[$index]['short_name']);
+            $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
         }
     }
 
@@ -111,15 +113,15 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         $expectedVariants = array(
             0 => array(
-                'short_name' => '12',
+                'short_name' => '12'
             ),
             1 => array(
-                'short_name' => '11',
+                'short_name' => '11'
             )
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
-            $this->assertEquals($expectedVariant['short_name'], $variants[$index]['short_name']);
+            $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
         }
     }
 
@@ -140,19 +142,19 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
             0 => array(
                 'name' => 'Product without common prefix',
                 'url' => 'http://localhost/index.php/product-without-common-prefix.html',
-                'short_name' => 'Product without common prefix',
+                'short_name' => 'Product without common prefix'
             ),
             1 => array(
                 'name' => 'Without common prefix product',
                 'url' => 'http://localhost/index.php/without-common-prefix-product.html',
-                'short_name' => 'Without common prefix product',
+                'short_name' => 'Without common prefix product'
             )
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
-            $this->assertEquals($expectedVariant['name'], $variants[$index]['name']);
-            $this->assertEquals($expectedVariant['url'], $variants[$index]['url']);
-            $this->assertEquals($expectedVariant['short_name'], $variants[$index]['short_name']);
+            $this->assertEquals($expectedVariant['name'], $variants[$index]->getName());
+            $this->assertEquals($expectedVariant['url'], $variants[$index]->getUrl());
+            $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
         }
     }
 
@@ -172,15 +174,15 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         $expectedVariants = array(
             0 => array(
-                'short_name' => 'Product without common suffix',
+                'short_name' => 'Product without common suffix'
             ),
             1 => array(
-                'short_name' => 'Without common suffix product',
+                'short_name' => 'Without common suffix product'
             )
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
-            $this->assertEquals($expectedVariant['short_name'], $variants[$index]['short_name']);
+            $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
         }
     }
 
@@ -196,7 +198,7 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         $variants = $this->variantSwitcherBlock->getVariants();
 
-        $this->assertNull($variants);
+        $this->assertEmpty($variants);
     }
 
     /**
@@ -209,7 +211,7 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         $variants = $this->variantSwitcherBlock->getVariants();
 
-        $this->assertNull($variants);
+        $this->assertEmpty($variants);
     }
 
     public static function loadProductsWithVariants()

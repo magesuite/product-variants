@@ -62,7 +62,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         $isEnabled = $this->scopeConfig->getValue(self::PRODUCT_VARIANTS_ENABLED_CONFIG_PATH);
 
         if (!$isEnabled OR $currentProduct == null OR empty($this->getProductVariantsAttributeCode())) {
-            return null;
+            return [];
         }
 
         $groupId = $currentProduct->getData($this->getProductVariantsAttributeCode());
@@ -71,12 +71,13 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         $variants = [];
 
         foreach ($products as $product) {
-            $variant = [
+            $variant = new \Magento\Framework\DataObject([
                 'name' => $product->getName(),
                 'url' => $product->getProductUrl(),
                 'image_url' => $this->imageHelper->init($product, 'category_page_grid')->getUrl(),
-                'short_name' => trim($product->getName())
-            ];
+                'short_name' => trim($product->getName()),
+                'variant_name' => trim($product->getVariantName()),
+            ]);
 
             if ($product->getSku() == $currentProduct->getSku()) {
                 array_unshift($variants, $variant);
@@ -87,7 +88,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         }
 
         if (count($variants) == 1) {
-            return null;
+            return [];
         }
 
         $variants = $this->getShortNames($variants);
@@ -108,7 +109,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         return $collection->getItems();
     }
 
-    public function getShortNames($variants)
+    protected function getShortNames($variants)
     {
         $commonPrefix = $this->stringUtils->getCommonPrefix($variants);
         $commonSuffix = $this->stringUtils->getCommonSuffix($variants);
@@ -120,18 +121,21 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
                 break;
             case 'remove_prefix':
                 foreach ($variants as &$variant) {
-                    $variant['short_name'] = $this->stringUtils->removePrefix($variant['short_name'], $commonPrefix);
+                    $shortName = $this->stringUtils->removePrefix($variant->getShortName(), $commonPrefix);
+                    $variant->setShortName($shortName);
                 }
                 break;
             case 'remove_suffix':
                 foreach ($variants as &$variant) {
-                    $variant['short_name'] = $this->stringUtils->removeSuffix($variant['short_name'], $commonSuffix);
+                    $shortName = $this->stringUtils->removeSuffix($variant->getShortName(), $commonSuffix);
+                    $variant->setShortName($shortName);
                 }
                 break;
             case 'remove_prefix_suffix':
                 foreach ($variants as &$variant) {
-                    $variant['short_name'] = $this->stringUtils->removePrefix($variant['short_name'], $commonPrefix);
-                    $variant['short_name'] = $this->stringUtils->removeSuffix($variant['short_name'], $commonSuffix);
+                    $shortName = $this->stringUtils->removePrefix($variant->getShortName(), $commonPrefix);
+                    $shortName = $this->stringUtils->removeSuffix($shortName, $commonSuffix);
+                    $variant->setShortName($shortName);
                 }
                 break;
         }
@@ -139,7 +143,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         return $variants;
     }
 
-    private function getProductVariantsAttributeCode()
+    protected function getProductVariantsAttributeCode()
     {
         return $this->scopeConfig->getValue(self::PRODUCT_GROUP_ID_CONFIG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }

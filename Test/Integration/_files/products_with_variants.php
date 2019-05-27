@@ -16,7 +16,7 @@ $mediaDirectory->create($targetTmpDirPath);
 
 $images = ['magento_image_1.jpg', 'magento_image_2.jpg', 'magento_image_3.jpg'];
 
-foreach($images AS $image){
+foreach ($images AS $image) {
     $targetTmpFilePath = $mediaDirectory->getAbsolutePath() . DIRECTORY_SEPARATOR . $targetTmpDirPath
         . DIRECTORY_SEPARATOR . $image;
     copy(__DIR__ . '/' . $image, $targetTmpFilePath);
@@ -73,6 +73,7 @@ $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
     ->setSku('product_variant_2')
     ->setUrlKey('product_variant_2')
     ->setArticleGroupId('group_1')
+    ->setVariantName('Custom short name')
     ->setPrice(10)
     ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
     ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
@@ -83,7 +84,7 @@ $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
 
 $product = $objectManager->create('Magento\Catalog\Model\Product');
 $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setId(603)
+    ->setId(602)
     ->setAttributeSetId(4)
     ->setName('Product variant 3 disabled')
     ->setSku('product_variant_3_disabled')
@@ -99,7 +100,7 @@ $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
 
 $product = $objectManager->create('Magento\Catalog\Model\Product');
 $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setId(602)
+    ->setId(603)
     ->setAttributeSetId(4)
     ->setName('Product without variants')
     ->setSku('product_without_variants')
