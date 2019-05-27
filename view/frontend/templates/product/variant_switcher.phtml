@@ -3,15 +3,17 @@
 $variants = $block->getVariants();
 ?>
 
-<?php if($variants != null and is_array($variants) and !empty($variants)): ?>
+<?php if (!empty($variants)): ?>
     <?php $label = $block->getLabel() ?? __('Variants'); ?>
 
     <div class="cs-buybox__product-variants">
         <label class="cs-buybox__product-variants-label" for="variant-switcher-select"><?= $label ?></label>
         <div class="cs-buybox__product-variants-dropdown">
             <select id="variant-switcher-select" name="variant-switcher-select" class="cs-select">
-                <?php foreach($variants as $variant): ?>
-                    <option value="<?=$variant['url']?>" data-content="<div class='cs-html-select__text-image-wrapper'><img class='cs-html-select__thumbnail' src='<?=$variant['image_url']?>' /> <?=$variant['short_name']?></div>"><?=$variant['short_name']?></option>
+                <?php foreach ($variants as $variant): ?>
+                    <option value="<?= $variant->getUrl() ?>" data-content="<div class='cs-html-select__text-image-wrapper'><img class='cs-html-select__thumbnail' src='<?= $variant->getImageUrl() ?>' />
+                        <?= $variant->getVariantName() ?: $variant->getShortName() ?></div>"><?= $variant->getVariantName() ?: $variant->getShortName() ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -19,7 +21,7 @@ $variants = $block->getVariants();
     <script>
         require(['jquery'], function ($) {
             'use strict';
-            $('#variant-switcher-select').on('change', function(event) {
+            $('#variant-switcher-select').on('change', function (event) {
                 window.location.href = $(this).val();
             });
         });

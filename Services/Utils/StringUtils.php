@@ -10,7 +10,7 @@ class StringUtils
     {
         $firstVariant = array_shift($variants);
 
-        $words = explode(' ', $firstVariant['short_name']);
+        $words = explode(' ', $firstVariant->getShortName());
 
         if (count($words) == 1) {
             return '';
@@ -49,7 +49,7 @@ class StringUtils
     protected function allVariantsContainsPrefix($variants, $prefix)
     {
         foreach ($variants as $variant) {
-            if (!$this->beginsWith($variant['short_name'], $prefix)) {
+            if (!$this->beginsWith($variant->getShortName(), $prefix)) {
                 return false;
             }
         }
@@ -66,7 +66,7 @@ class StringUtils
     {
         $firstVariant = array_shift($variants);
 
-        $words = explode(' ', $firstVariant['short_name']);
+        $words = explode(' ', $firstVariant->getShortName());
 
         if (count($words) == 1) {
             return '';
@@ -108,7 +108,7 @@ class StringUtils
     protected function allVariantsContainsSuffix($variants, $suffix)
     {
         foreach ($variants as $variant) {
-            if (!$this->endsWith($variant['short_name'], $suffix)) {
+            if (!$this->endsWith($variant->getShortName(), $suffix)) {
                 return false;
             }
         }
