@@ -2,14 +2,17 @@
 
 namespace MageSuite\ProductVariants\Block\Product;
 
-class VariantSwitcher extends \Magento\Framework\View\Element\Template
+class VariantSwitcher extends \Magento\Framework\View\Element\Template implements \Magento\Framework\DataObject\IdentityInterface
 {
     protected $_template = 'MageSuite_ProductVariants::product/variant_switcher.phtml';
 
+    const BLOCK_TYPE = 'VARIANT_SWITCHER';
     const PRODUCT_VARIANTS_ENABLED_CONFIG_PATH = 'product_variants/configuration/enabled';
     const PRODUCT_GROUP_ID_CONFIG_PATH = 'product_variants/configuration/attribute_code';
     const PRODUCT_SHORT_NAME_PATTERN_CONFIG_PATH = 'product_variants/configuration/short_name_pattern';
     const STATUS_ATTRIBUTE_CODE = 'status';
+
+    protected $product = null;
 
     /**
      * @var \Magento\Framework\Registry
@@ -34,7 +37,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
     /**
      * @var \MageSuite\ProductVariants\Services\Utils\StringUtils
      */
-    private $stringUtils;
+    protected $stringUtils;
 
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -44,8 +47,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
         \Magento\Catalog\Helper\Image $imageHelper,
         \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
 
         $this->registry = $registry;
@@ -58,10 +60,10 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
     public function getVariants()
     {
         /** @var \Magento\Catalog\Api\Data\ProductInterface $currentProduct */
-        $currentProduct = $this->registry->registry('current_product');
+        $currentProduct = $this->getProduct();
         $isEnabled = $this->scopeConfig->getValue(self::PRODUCT_VARIANTS_ENABLED_CONFIG_PATH);
 
-        if (!$isEnabled OR $currentProduct == null OR empty($this->getProductVariantsAttributeCode())) {
+        if (!$isEnabled || $currentProduct == null || empty($this->getProductVariantsAttributeCode())) {
             return [];
         }
 
@@ -146,5 +148,45 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template
     protected function getProductVariantsAttributeCode()
     {
         return $this->scopeConfig->getValue(self::PRODUCT_GROUP_ID_CONFIG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getCacheKeyInfo()
+    {
+        $productId = $this->getProduct()->getEntityId();
+
+        return [
+            self::BLOCK_TYPE,
+            $productId,
+            $this->_storeManager->getStore()->getId(),
+            $this->serialize($this->getIdentities())
+        ];
+    }
+
+    public function getCacheLifetime()
+    {
+        return 86400;
+    }
+
+    public function getIdentities()
+    {
+        $currentProduct = $this->getProduct();
+        $variantGroupId = $currentProduct->getData($this->getProductVariantsAttributeCode());
+
+        $identities = [];
+
+        foreach ($this->getProductsByGroupId($variantGroupId) as $product) {
+            $identities[] = sprintf('%s_%s', \Magento\Catalog\Model\Product::CACHE_TAG, $product->getId());
+        }
+
+        return $identities;
+    }
+
+    public function getProduct()
+    {
+        if (empty($this->product)) {
+            $this->product = $this->registry->registry('current_product');
+        }
+
+        return $this->product;
     }
 }
