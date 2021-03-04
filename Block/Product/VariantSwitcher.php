@@ -189,4 +189,16 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
 
         return $this->product;
     }
+
+    /**
+     * @return string
+     */
+    protected function _toHtml()
+    {
+        if (empty($this->getVariants())) {
+            return '';
+        }
+
+        return parent::_toHtml();
+    }
 }
