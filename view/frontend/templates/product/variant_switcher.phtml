@@ -1,28 +1,25 @@
 <?php
 /** @var \MageSuite\ProductVariants\Block\Product\VariantSwitcher $block */
 $variants = $block->getVariants();
+$label = $block->getLabel() ?? __('Variants');
 ?>
-<?php if (!empty($variants)): ?>
-    <?php $label = $block->getLabel() ?? __('Variants'); ?>
-
-    <div class="cs-buybox__product-variants">
-        <label class="cs-buybox__product-variants-label" for="variant-switcher-select"><?= $label ?></label>
-        <div class="cs-buybox__product-variants-dropdown">
-            <select id="variant-switcher-select" name="variant-switcher-select" class="cs-select">
-                <?php foreach ($variants as $variant): ?>
-                    <option value="<?= $variant->getUrl() ?>" data-content="<div class='cs-html-select__text-image-wrapper'><img class='cs-html-select__thumbnail' src='<?= $variant->getImageUrl() ?>' />
-                        <?= $variant->getVariantName() ?: $variant->getShortName() ?></div>"><?= $variant->getVariantName() ?: $variant->getShortName() ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+<div class="cs-buybox__product-variants">
+    <label class="cs-buybox__product-variants-label" for="variant-switcher-select"><?= $label ?></label>
+    <div class="cs-buybox__product-variants-dropdown">
+        <select id="variant-switcher-select" name="variant-switcher-select" class="cs-select">
+            <?php foreach ($variants as $variant): ?>
+                <option value="<?= $variant->getUrl() ?>" data-content="<div class='cs-html-select__text-image-wrapper'><img class='cs-html-select__thumbnail' src='<?= $variant->getImageUrl() ?>' />
+                    <?= $variant->getVariantName() ?: $variant->getShortName() ?></div>"><?= $variant->getVariantName() ?: $variant->getShortName() ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
-    <script>
-        require(['jquery'], function ($) {
-            'use strict';
-            $('#variant-switcher-select').on('change', function (event) {
-                window.location.href = $(this).val();
-            });
+</div>
+<script>
+    require(['jquery'], function ($) {
+        'use strict';
+        $('#variant-switcher-select').on('change', function (event) {
+            window.location.href = $(this).val();
         });
-    </script>
-<?php endif; ?>
+    });
+</script>
