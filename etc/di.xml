@@ -1,19 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Framework\Console\CommandList">
-        <arguments>
-            <argument name="commands" xsi:type="array">
-                <item name="prepare_base_category_tree" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\PrepareBaseCategoryTree</item>
-                <item name="group_simple_products_into_configurable" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\GroupSimpleProductsIntoConfigurable</item>
-                <item name="assign_products_to_categories" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\AssignProductsToCategories</item>
-                <item name="products_to_remove" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\RemoveNotNeededProducts</item>
-                <item name="assign_quantities_to_source" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\AssignQuantitiesToSource</item>
-                <item name="assign_ratings_to_configurable_products" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\AssignSimpleProductRatingsIntoConfigurable</item>
-                <item name="url_redirect_migration" xsi:type="object">Creativestyle\CustomizationMicro\Console\Command\UrlRedirectMigration</item>
-            </argument>
-        </arguments>
-    </type>
-
     <type name="MageSuite\ProductVariants\Block\Product\VariantSwitcher">
         <arguments>
             <argument name="productVariantImageType" xsi:type="string">category_page_grid</argument>
