@@ -38,6 +38,10 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
      * @var \MageSuite\ProductVariants\Services\Utils\StringUtils
      */
     protected $stringUtils;
+    /**
+     * @var string
+     */
+    protected $productVariantImageType;
 
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -46,6 +50,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
         \Magento\Catalog\Helper\Image $imageHelper,
         \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
+        string $productVariantImageType,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -55,6 +60,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         $this->collectionFactory = $collectionFactory;
         $this->imageHelper = $imageHelper;
         $this->stringUtils = $stringUtils;
+        $this->productVariantImageType = $productVariantImageType;
     }
 
     public function getVariants()
@@ -76,7 +82,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
             $variant = new \Magento\Framework\DataObject([
                 'name' => $product->getName(),
                 'url' => $product->getProductUrl(),
-                'image_url' => $this->imageHelper->init($product, 'category_page_grid')->getUrl(),
+                'image_url' => $this->imageHelper->init($product, $this->productVariantImageType)->getUrl(),
                 'short_name' => trim($product->getName()),
                 'variant_name' => trim($product->getVariantName()),
             ]);
