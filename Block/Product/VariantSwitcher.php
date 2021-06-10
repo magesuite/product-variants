@@ -85,9 +85,11 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
                 'image_url' => $this->imageHelper->init($product, $this->productVariantImageType)->getUrl(),
                 'short_name' => trim($product->getName()),
                 'variant_name' => trim($product->getVariantName()),
+                'current' => false
             ]);
 
             if ($product->getSku() == $currentProduct->getSku()) {
+                $variant->setData('current', true);
                 array_unshift($variants, $variant);
                 continue;
             }
