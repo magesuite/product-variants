@@ -6,7 +6,7 @@ $label = $block->getLabel() ?? __('Variants');
 <div class="cs-product-variants">
     <div class="cs-product-variants__label"><?= $label ?></div>
     <div class="cs-product-variants__content">
-        <div 
+        <div
             class="cs-product-variants__trigger"
             data-mage-init='{"dropdown":{}}'
             data-toggle="dropdown"
@@ -14,7 +14,7 @@ $label = $block->getLabel() ?? __('Variants');
         >
             <div class="cs-product-variants__variant">
                 <img class="cs-product-variants__variant-image" src='<?= $variants[0]->getImageUrl() ?>' />
-                <?= $variants[0]->getVariantName() ?: $variants[0]->getShortName() ?>
+                <span class="cs-product-variants__variant-name"><?= $variants[0]->getVariantName() ?: $variants[0]->getShortName() ?></span>
             </div>
         </div>
         <div class="cs-product-variants__list" data-target="dropdown">
@@ -27,5 +27,5 @@ $label = $block->getLabel() ?? __('Variants');
                 </div>
             <?php endforeach; ?>
         </div>
-    </div>    
+    </div>
 </div>
