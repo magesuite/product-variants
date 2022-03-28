@@ -2,7 +2,7 @@
 
 namespace MageSuite\ProductVariants\Services;
 
-class Variants
+class VariantsDataProvider
 {
     const STATUS_ATTRIBUTE_CODE = 'status';
 

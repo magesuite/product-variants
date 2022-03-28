@@ -16,9 +16,9 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
     protected $registry;
 
     /**
-     * @var \MageSuite\ProductVariants\Services\Variants
+     * @var \MageSuite\ProductVariants\Services\VariantsDataProvider
      */
-    protected $variants;
+    protected $variantsDataProvider;
 
     /**
      * @var \MageSuite\ProductVariants\Helper\Configuration
@@ -33,7 +33,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
     public function __construct(
         \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Element\Template\Context $context,
-        \MageSuite\ProductVariants\Services\Variants $variants,
+        \MageSuite\ProductVariants\Services\VariantsDataProvider $variantsDataProvider,
         \MageSuite\ProductVariants\Helper\Configuration $configuration,
         string $productVariantImageType,
         array $data = []
@@ -41,7 +41,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         parent::__construct($context, $data);
 
         $this->registry = $registry;
-        $this->variants = $variants;
+        $this->variantsDataProvider = $variantsDataProvider;
         $this->configuration = $configuration;
         $this->productVariantImageType = $productVariantImageType;
     }
@@ -62,13 +62,13 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
             return [];
         }
 
-        $variantProducts = $this->variants->getProductsByGroupId($groupId);
+        $variantProducts = $this->variantsDataProvider->getProductsByGroupId($groupId);
         if (count($variantProducts) < 2) {
             return [];
         }
 
-        $variants = $this->variants->getVariants($variantProducts, $this->productVariantImageType);
-        $variants = $this->variants->getShortNames($variants);
+        $variants = $this->variantsDataProvider->getVariants($variantProducts, $this->productVariantImageType);
+        $variants = $this->variantsDataProvider->getShortNames($variants);
 
         $this->setCurrentProductAsCurrentVariant($variants);
         return $variants;
@@ -110,7 +110,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         $variantGroupId = $currentProduct->getData($this->configuration->getVariantGroupAttributeCode());
 
         $identities = [];
-        foreach ($this->variants->getProductsByGroupId($variantGroupId) as $product) {
+        foreach ($this->variantsDataProvider->getProductsByGroupId($variantGroupId) as $product) {
             $identities[] = sprintf('%s_%s', \Magento\Catalog\Model\Product::CACHE_TAG, $product->getId());
         }
 
