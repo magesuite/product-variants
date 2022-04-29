@@ -94,8 +94,7 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         return [
             self::BLOCK_TYPE,
             $productId,
-            $this->_storeManager->getStore()->getId(),
-            $this->serialize($this->getIdentities())
+            $this->_storeManager->getStore()->getId()
         ];
     }
 
@@ -110,8 +109,8 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         $variantGroupId = $currentProduct->getData($this->configuration->getVariantGroupAttributeCode());
 
         $identities = [];
-        foreach ($this->variantsDataProvider->getProductsByGroupId($variantGroupId) as $product) {
-            $identities[] = sprintf('%s_%s', \Magento\Catalog\Model\Product::CACHE_TAG, $product->getId());
+        foreach ($this->variantsDataProvider->getProductIdsByGroupId($variantGroupId) as $productId) {
+            $identities[] = sprintf('%s_%s', \Magento\Catalog\Model\Product::CACHE_TAG, $productId);
         }
 
         return $identities;
