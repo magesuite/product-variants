@@ -22,6 +22,11 @@ class VariantsDataProvider
     protected $stringUtils;
 
     /**
+     * @var \MageSuite\ProductVariants\Model\ResourceModel\Variants
+     */
+    protected $variants;
+
+    /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
     protected $productCollectionFactory;
@@ -30,11 +35,13 @@ class VariantsDataProvider
         \Magento\Catalog\Helper\Image $imageHelper,
         \MageSuite\ProductVariants\Helper\Configuration $configuration,
         \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
+        \MageSuite\ProductVariants\Model\ResourceModel\Variants $variants,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
     ) {
         $this->imageHelper = $imageHelper;
         $this->configuration = $configuration;
         $this->stringUtils = $stringUtils;
+        $this->variants = $variants;
         $this->productCollectionFactory = $productCollectionFactory;
     }
 
@@ -96,14 +103,22 @@ class VariantsDataProvider
 
     public function getProductsByGroupId($groupId)
     {
+        $productsIds = $this->getProductIdsByGroupId($groupId);
+
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->productCollectionFactory->create();
 
         $collection->addAttributeToSelect('*');
-        $collection->addAttributeToFilter($this->configuration->getVariantGroupAttributeCode(), $groupId);
+        $collection->addAttributeToFilter('entity_id', $productsIds);
         $collection->addAttributeToFilter(self::STATUS_ATTRIBUTE_CODE, \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
         $collection->addUrlRewrite();
 
         return $collection->getItems();
+    }
+
+    public function getProductIdsByGroupId($groupId)
+    {
+        $productIds = $this->variants->getProductIdsByGroupId($groupId);
+        return array_column($productIds, 'entity_id');
     }
 }

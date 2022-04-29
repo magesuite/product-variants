@@ -214,6 +214,26 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($variants);
     }
 
+    /**
+     * @magentoDataFixture loadProductsWithVariants
+     */
+    public function testItReturnsCorrectIdentities()
+    {
+        $product = $this->productRepository->get('product_without_common_suffix');
+        $this->coreRegistry->register('current_product', $product);
+
+        /** @var \MageSuite\ProductVariants\Block\Product\VariantSwitcher $block */
+        $block = $this->getVariantSwitcherBlock();
+        self::assertEquals(['cat_p_606', 'cat_p_607'], $block->getIdentities());
+    }
+
+    protected function getVariantSwitcherBlock()
+    {
+        $block = $this->objectManager->create(\MageSuite\ProductVariants\Block\Product\VariantSwitcher::class);
+
+        return $block;
+    }
+
     public static function loadProductsWithVariants()
     {
         require __DIR__ . '/../../_files/products_with_variants.php';
