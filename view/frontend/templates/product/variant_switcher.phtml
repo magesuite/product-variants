@@ -22,7 +22,7 @@ $label = $block->getLabel() ?? __('Variants');
                 <div class="cs-product-variants__variant">
                     <a class="cs-product-variants__variant-link" href="<?= $variant->getUrl() ?>">
                         <img class="cs-product-variants__variant-image" src='<?= $variant->getImageUrl() ?>' />
-                        <?= $variant->getVariantName() ?: $variant->getShortName() ?>
+                        <span class="cs-product-variants__variant-name"><?= $variant->getVariantName() ?: $variant->getShortName() ?></span>
                     </a>
                 </div>
             <?php endforeach; ?>
