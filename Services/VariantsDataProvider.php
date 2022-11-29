@@ -62,8 +62,8 @@ class VariantsDataProvider
             'name' => $product->getName(),
             'url' => $product->getProductUrl(),
             'image_url' => $this->imageHelper->init($product, $imageType)->getUrl(),
-            'short_name' => trim($product->getName()),
-            'variant_name' => trim($product->getVariantName()),
+            'short_name' => $product->getName() === null ? '' : trim($product->getName()),
+            'variant_name' => $product->getVariantName() === null ? '' : trim($product->getVariantName()),
             'current' => false
         ]);
     }
