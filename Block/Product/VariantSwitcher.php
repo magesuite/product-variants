@@ -116,6 +116,13 @@ class VariantSwitcher extends \Magento\Framework\View\Element\Template implement
         return $identities;
     }
 
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
     public function getProduct()
     {
         if (empty($this->product)) {
