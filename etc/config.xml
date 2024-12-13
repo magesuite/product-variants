@@ -6,6 +6,7 @@
                 <enabled>1</enabled>
                 <attribute_code>article_group_id</attribute_code>
                 <short_name_pattern>remove_prefix</short_name_pattern>
+                <include_out_of_stock>1</include_out_of_stock>
             </configuration>
         </product_variants>
     </default>

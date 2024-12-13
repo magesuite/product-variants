@@ -50,6 +50,10 @@ class Variants
             ->where('attribute_id = ?', $attribute->getId())
             ->where('value = ?', $groupId);
 
+        if ($attribute->getIsGlobal() == \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL) {
+            $select->where('store_id = ?', 0);
+        }
+
         $select->join(
             ['entity' => $connection->getTableName('catalog_product_entity')],
             "entity.{$linkField} = variant.{$linkField}",
