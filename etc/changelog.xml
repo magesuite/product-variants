@@ -1,0 +1,13 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:MageSuite_Changelog:etc/changelog.xsd">
+    <module id="MageSuite_MageSuite_ProductVariantsProductTile" name="MageSuite_ProductVariants">
+        <changelog>
+            <tag version="1.5.2" date="2024-11-27">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Extending functionality by stock limitation.</overview>
+                    <ticket_id>RKL-738</ticket_id>
+                </entry>
+            </tag>
+        </changelog>
+    </module>
+</config>

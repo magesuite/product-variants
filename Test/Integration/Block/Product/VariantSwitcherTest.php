@@ -173,16 +173,48 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
         $variants = $this->variantSwitcherBlock->getVariants();
 
         $expectedVariants = array(
-            0 => array(
+            0 => [
                 'short_name' => 'Product without common suffix'
-            ),
-            1 => array(
+            ],
+            1 => [
                 'short_name' => 'Without common suffix product'
-            )
+            ],
+            2 => [
+                'short_name' => 'Without common suffix product out of stock'
+            ]
         );
 
         foreach ($expectedVariants as $index => $expectedVariant) {
             $this->assertEquals($expectedVariant['short_name'], $variants[$index]->getShortName());
+        }
+    }
+
+    /**
+     * @magentoAppIsolation enabled
+     * @magentoDbIsolation enabled
+     * @magentoDataFixture loadProductsWithVariants
+     */
+    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonSuffixAndOutOfStockProductsAreExcluded()
+    {
+        $config = $this->objectManager->get(\Magento\Framework\App\Config\ConfigResource\ConfigInterface::class);
+        $config->saveConfig('product_variants/configuration/include_out_of_stock', 0, 'default', 0);
+
+        $cacheTypeList = $this->objectManager->get(\Magento\Framework\App\Cache\TypeListInterface::class);
+        $cacheTypeList->cleanType('config');
+        $this->objectManager->removeSharedInstance(\Magento\Config\App\Config\Type\System::class);
+        $reinitableConfig = $this->objectManager->get(\Magento\Framework\App\ReinitableConfig::class);
+        $reinitableConfig->reinit();
+
+        $product = $this->productRepository->get('product_without_common_suffix');
+
+        $this->coreRegistry->register('current_product', $product);
+
+        $variants = $this->variantSwitcherBlock->getVariants();
+
+        $notExpectedVariantsShortName = 'Without common suffix product out of stock';
+
+        foreach ($variants as $variant) {
+            $this->assertNotEquals($notExpectedVariantsShortName, $variant->getShortName());
         }
     }
 
@@ -224,7 +256,7 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
         /** @var \MageSuite\ProductVariants\Block\Product\VariantSwitcher $block */
         $block = $this->getVariantSwitcherBlock();
-        self::assertEquals(['cat_p_606', 'cat_p_607'], $block->getIdentities());
+        self::assertEquals(['cat_p_606', 'cat_p_607', 'cat_p_608'], $block->getIdentities());
     }
 
     protected function getVariantSwitcherBlock()
