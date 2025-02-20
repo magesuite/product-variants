@@ -89,7 +89,15 @@ class VariantsDataProvider
 
     public function getProductsByGroupId($groupId)
     {
+        if (empty($groupId)) {
+            return [];
+        }
+
         $productsIds = $this->getProductIdsByGroupId($groupId);
+
+        if (empty($productsIds)) {
+            return [];
+        }
 
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->productCollectionFactory->create();
@@ -108,6 +116,10 @@ class VariantsDataProvider
 
     public function getProductIdsByGroupId($groupId)
     {
+        if (empty($groupId)) {
+            return [];
+        }
+
         $productIds = $this->variants->getProductIdsByGroupId($groupId);
         return array_column($productIds, 'entity_id');
     }
