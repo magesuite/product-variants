@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="catalog_product_entity_varchar" resource="default">
-        <index referenceId="IDX_ATTR_STORE_VALUE">
+        <index referenceId="CATALOG_PRODUCT_ENTITY_VARCHAR_ATTRIBUTE_ID_STORE_ID_VALUE">
             <column name="attribute_id"/>
             <column name="store_id"/>
             <column name="value"/>

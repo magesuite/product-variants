@@ -1,0 +1,7 @@
+{
+    "catalog_product_entity_varchar": {
+        "index": {
+            "CATALOG_PRODUCT_ENTITY_VARCHAR_ATTRIBUTE_ID_STORE_ID_VALUE": true
+        }
+    }
+}
