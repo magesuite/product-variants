@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductVariants\Services;
 
 class VariantsDataProvider
@@ -30,7 +32,7 @@ class VariantsDataProvider
         $this->getStockIdForCurrentWebsite = $getStockIdForCurrentWebsite;
     }
 
-    public function getVariants($products, $imageType)
+    public function getVariants(array $products, ?string $imageType): array
     {
         $variants = [];
 
@@ -41,7 +43,7 @@ class VariantsDataProvider
         return $variants;
     }
 
-    public function getVariantData(\Magento\Catalog\Model\Product $product, $imageType)
+    public function getVariantData(\Magento\Catalog\Model\Product $product, ?string $imageType): \Magento\Framework\DataObject
     {
         return new \Magento\Framework\DataObject([
             'sku' => $product->getSku(),
@@ -54,7 +56,7 @@ class VariantsDataProvider
         ]);
     }
 
-    public function getShortNames($variants)
+    public function getShortNames(array $variants): array
     {
         $commonPrefix = $this->stringUtils->getCommonPrefix($variants);
         $commonSuffix = $this->stringUtils->getCommonSuffix($variants);
@@ -87,7 +89,7 @@ class VariantsDataProvider
         return $variants;
     }
 
-    public function getProductsByGroupId($groupId)
+    public function getProductsByGroupId(mixed $groupId): array
     {
         if (empty($groupId)) {
             return [];
@@ -114,7 +116,7 @@ class VariantsDataProvider
         return $collection->getItems();
     }
 
-    public function getProductIdsByGroupId($groupId)
+    public function getProductIdsByGroupId(mixed $groupId): array
     {
         if (empty($groupId)) {
             return [];
