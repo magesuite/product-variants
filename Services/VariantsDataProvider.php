@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductVariants\Services;
 
 class VariantsDataProvider
@@ -30,7 +32,7 @@ class VariantsDataProvider
         $this->getStockIdForCurrentWebsite = $getStockIdForCurrentWebsite;
     }
 
-    public function getVariants($products, $imageType)
+    public function getVariants(array $products, ?string $imageType): array
     {
         $variants = [];
 
@@ -41,7 +43,7 @@ class VariantsDataProvider
         return $variants;
     }
 
-    public function getVariantData(\Magento\Catalog\Model\Product $product, $imageType)
+    public function getVariantData(\Magento\Catalog\Model\Product $product, ?string $imageType): \Magento\Framework\DataObject
     {
         return new \Magento\Framework\DataObject([
             'sku' => $product->getSku(),
@@ -54,7 +56,7 @@ class VariantsDataProvider
         ]);
     }
 
-    public function getShortNames($variants)
+    public function getShortNames(array $variants): array
     {
         $commonPrefix = $this->stringUtils->getCommonPrefix($variants);
         $commonSuffix = $this->stringUtils->getCommonSuffix($variants);
@@ -87,9 +89,17 @@ class VariantsDataProvider
         return $variants;
     }
 
-    public function getProductsByGroupId($groupId)
+    public function getProductsByGroupId(mixed $groupId): array
     {
+        if (empty($groupId)) {
+            return [];
+        }
+
         $productsIds = $this->getProductIdsByGroupId($groupId);
+
+        if (empty($productsIds)) {
+            return [];
+        }
 
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->productCollectionFactory->create();
@@ -106,8 +116,12 @@ class VariantsDataProvider
         return $collection->getItems();
     }
 
-    public function getProductIdsByGroupId($groupId)
+    public function getProductIdsByGroupId(mixed $groupId): array
     {
+        if (empty($groupId)) {
+            return [];
+        }
+
         $productIds = $this->variants->getProductIdsByGroupId($groupId);
         return array_column($productIds, 'entity_id');
     }
