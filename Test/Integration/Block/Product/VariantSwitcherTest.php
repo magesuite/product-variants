@@ -1,28 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductVariants\Test\Integration\Block\Product;
 
 class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
+    protected \Magento\TestFramework\ObjectManager $objectManager;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $coreRegistry;
+    protected \Magento\Framework\Registry $coreRegistry;
 
-    /**
-     * @var \MageSuite\ProductVariants\Block\Product\VariantSwitcher
-     */
-    protected $variantSwitcherBlock;
+    protected \MageSuite\ProductVariants\Block\Product\VariantSwitcher $variantSwitcherBlock;
 
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
 
     public function setUp(): void
     {
@@ -35,10 +25,10 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      * @magentoAdminConfigFixture product_variants/configuration/short_name_pattern remove_prefix
      */
-    public function testItReturnsProductsVariantsWithoutPrefix()
+    public function testItReturnsProductsVariantsWithoutPrefix(): void
     {
         $product = $this->productRepository->get('product_variant_2');
 
@@ -72,10 +62,10 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      * @magentoAdminConfigFixture product_variants/configuration/short_name_pattern remove_suffix
      */
-    public function testItReturnsProductsVariantsWithoutSuffix()
+    public function testItReturnsProductsVariantsWithoutSuffix(): void
     {
         $product = $this->productRepository->get('product_variant_2');
 
@@ -100,10 +90,10 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      * @magentoAdminConfigFixture product_variants/configuration/short_name_pattern remove_prefix_suffix
      */
-    public function testItReturnsProductsVariantsWithoutPrefixAndSuffix()
+    public function testItReturnsProductsVariantsWithoutPrefixAndSuffix(): void
     {
         $product = $this->productRepository->get('product_variant_2');
 
@@ -128,9 +118,9 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      */
-    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonPrefix()
+    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonPrefix(): void
     {
         $product = $this->productRepository->get('product_without_common_prefix');
 
@@ -161,10 +151,10 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      * @magentoAdminConfigFixture product_variants/configuration/short_name_pattern remove_suffix
      */
-    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonSuffix()
+    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonSuffix(): void
     {
         $product = $this->productRepository->get('product_without_common_suffix');
 
@@ -192,9 +182,9 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      */
-    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonSuffixAndOutOfStockProductsAreExcluded()
+    public function testItReturnsCorrectProductsVariantsWhenThereIsNoCommonSuffixAndOutOfStockProductsAreExcluded(): void
     {
         $config = $this->objectManager->get(\Magento\Framework\App\Config\ConfigResource\ConfigInterface::class);
         $config->saveConfig('product_variants/configuration/include_out_of_stock', 0, 'default', 0);
@@ -220,9 +210,9 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      */
-    public function testItReturnsNullWithoutVariants()
+    public function testItReturnsNullWithoutVariants(): void
     {
         $product = $this->productRepository->get('product_without_variants');
 
@@ -235,9 +225,9 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      */
-    public function testItReturnsNullWhenNoCurrentProductIsRegistered()
+    public function testItReturnsNullWhenNoCurrentProductIsRegistered(): void
     {
         $this->coreRegistry->register('current_product', null);
 
@@ -247,9 +237,9 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoDataFixture loadProductsWithVariants
+     * @magentoDataFixture MageSuite_ProductVariants::Test/Integration/_files/products_with_variants.php
      */
-    public function testItReturnsCorrectIdentities()
+    public function testItReturnsCorrectIdentities(): void
     {
         $product = $this->productRepository->get('product_without_common_suffix');
         $this->coreRegistry->register('current_product', $product);
@@ -259,20 +249,8 @@ class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(['cat_p_606', 'cat_p_607', 'cat_p_608'], $block->getIdentities());
     }
 
-    protected function getVariantSwitcherBlock()
+    protected function getVariantSwitcherBlock(): \MageSuite\ProductVariants\Block\Product\VariantSwitcher
     {
-        $block = $this->objectManager->create(\MageSuite\ProductVariants\Block\Product\VariantSwitcher::class);
-
-        return $block;
-    }
-
-    public static function loadProductsWithVariants()
-    {
-        require __DIR__ . '/../../_files/products_with_variants.php';
-    }
-
-    public static function loadProductsWithVariantsRollback()
-    {
-        require __DIR__ . '/../../_files/products_with_variants_rollback.php';
+        return $this->objectManager->create(\MageSuite\ProductVariants\Block\Product\VariantSwitcher::class);
     }
 }
