@@ -6,13 +6,10 @@ namespace MageSuite\ProductVariants\Test\Integration\Block\Product;
 
 class VariantSwitcherTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\TestFramework\ObjectManager $objectManager;
-
-    protected \Magento\Framework\Registry $coreRegistry;
-
-    protected \MageSuite\ProductVariants\Block\Product\VariantSwitcher $variantSwitcherBlock;
-
-    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $coreRegistry;
+    protected ?\MageSuite\ProductVariants\Block\Product\VariantSwitcher $variantSwitcherBlock;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
 
     public function setUp(): void
     {
