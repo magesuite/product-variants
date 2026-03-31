@@ -104,7 +104,7 @@ class VariantsDataProvider
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->productCollectionFactory->create();
 
-        $collection->addAttributeToSelect('*');
+        $collection->addAttributeToSelect(['name', 'small_image', 'image', 'thumbnail', 'variant_name'], 'left');
         $collection->addAttributeToFilter('entity_id', $productsIds);
         $collection->addAttributeToFilter(self::STATUS_ATTRIBUTE_CODE, \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
         $collection->addUrlRewrite();
