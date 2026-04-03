@@ -5,4 +5,16 @@
             <argument name="productVariantImageType" xsi:type="string">category_page_grid</argument>
         </arguments>
     </type>
+
+    <type name="MageSuite\ProductVariants\Services\VariantsDataProvider">
+        <arguments>
+            <argument name="attributesToSelect" xsi:type="array">
+                <item name="name" xsi:type="string">name</item>
+                <item name="small_image" xsi:type="string">small_image</item>
+                <item name="image" xsi:type="string">image</item>
+                <item name="thumbnail" xsi:type="string">thumbnail</item>
+                <item name="variant_name" xsi:type="string">variant_name</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
