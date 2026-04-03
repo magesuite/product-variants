@@ -9,27 +9,15 @@ class VariantsDataProvider
     public const STATUS_ATTRIBUTE_CODE = 'status';
     public const CATALOG_PRODUCT_ENTITY_TYPE_ID = 4;
 
-    protected \Magento\Catalog\Helper\Image $imageHelper;
-    protected \MageSuite\ProductVariants\Helper\Configuration $configuration;
-    protected \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils;
-    protected \MageSuite\ProductVariants\Model\ResourceModel\Variants $variants;
-    protected \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory;
-    protected \Magento\InventoryCatalog\Model\GetStockIdForCurrentWebsite $getStockIdForCurrentWebsite;
-
     public function __construct(
-        \Magento\Catalog\Helper\Image $imageHelper,
-        \MageSuite\ProductVariants\Helper\Configuration $configuration,
-        \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
-        \MageSuite\ProductVariants\Model\ResourceModel\Variants $variants,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\InventoryCatalog\Model\GetStockIdForCurrentWebsite $getStockIdForCurrentWebsite
+        protected \Magento\Catalog\Helper\Image $imageHelper,
+        protected \MageSuite\ProductVariants\Helper\Configuration $configuration,
+        protected \MageSuite\ProductVariants\Services\Utils\StringUtils $stringUtils,
+        protected \MageSuite\ProductVariants\Model\ResourceModel\Variants $variants,
+        protected \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
+        protected \Magento\InventoryCatalog\Model\GetStockIdForCurrentWebsite $getStockIdForCurrentWebsite,
+        protected array $attributesToSelect = []
     ) {
-        $this->imageHelper = $imageHelper;
-        $this->configuration = $configuration;
-        $this->stringUtils = $stringUtils;
-        $this->variants = $variants;
-        $this->productCollectionFactory = $productCollectionFactory;
-        $this->getStockIdForCurrentWebsite = $getStockIdForCurrentWebsite;
     }
 
     public function getVariants(array $products, ?string $imageType): array
@@ -43,8 +31,10 @@ class VariantsDataProvider
         return $variants;
     }
 
-    public function getVariantData(\Magento\Catalog\Model\Product $product, ?string $imageType): \Magento\Framework\DataObject
-    {
+    public function getVariantData(
+        \Magento\Catalog\Model\Product $product,
+        ?string $imageType
+    ): \Magento\Framework\DataObject {
         return new \Magento\Framework\DataObject([
             'sku' => $product->getSku(),
             'name' => $product->getName(),
@@ -104,9 +94,12 @@ class VariantsDataProvider
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->productCollectionFactory->create();
 
-        $collection->addAttributeToSelect(['name', 'small_image', 'image', 'thumbnail', 'variant_name'], 'left');
+        $collection->addAttributeToSelect($this->attributesToSelect, 'left');
         $collection->addAttributeToFilter('entity_id', $productsIds);
-        $collection->addAttributeToFilter(self::STATUS_ATTRIBUTE_CODE, \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+        $collection->addAttributeToFilter(
+            self::STATUS_ATTRIBUTE_CODE,
+            \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED
+        );
         $collection->addUrlRewrite();
 
         if (!$this->configuration->includeOutOfStockProducts()) {
